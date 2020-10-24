@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="Main.js"></script>
+    <meta charset="UTF-8">
+    <title>Просмотр курса</title>
+</head>
+<script>
+
+    var course;
+    var shownQuestion = {answers: []};
+
+    var questionViews = [];
+    var themeLabelViews = [];
+
+    window.onload = function () {
+
+        /* addAnswerEmptyAnswer();
+         addAnswerEmptyAnswer();*/
+
+        requestGet("/getCourse/" + getQueryParam('courseId'), function (response) {
+            course = response;
+
+            for (var j = 0; j < course.themes.length; j++) {
+
+                var theme = course.themes[j];
+                addThemeToList(theme.themeName, theme.id);
+                if (theme.questions != null) {
+                    for (var p = 0; p < theme.questions.length; p++) {
+
+                        addQuestionToThree(theme.id, theme.questions[p].questionText, theme.questions[p].id);
+                    }
+                }
+            }
+        });
+
+        showEmptyQuestion();
+    };
+
+
+
+    function saveQuestionToServer(themeId) {
+
+        collectQuestion();
+        if (shownQuestion.id == null) {
+            for (var i = 0; i < course.themes.length; i++)
+                if (course.themes[i].id == themeId) {
+                    course.themes[i].push(shownQuestion);
+                }
+        }
+        uploadPicture(shownQuestion.image, function (pictureId) {
+            shownQuestion.image = pictureId;
+            requestPost("/addQuestion/" + course.id + "/" + themeId, JSON.stringify(shownQuestion), function (response) {
+
+                if (shownQuestion.id == null) {
+                    shownQuestion.id = response.result;
+                    addQuestionToThree(themeId, shownQuestion.questionText, shownQuestion.id);
+                } else {
+                    updateQuestionInThree();
+                }
+            });
+        });
+
+    }
+
+
+    function updateQuestionInThree() {
+        var questionView = document.getElementById(vs("question_$v", shownQuestion.id));
+        questionView.innerHTML = shownQuestion.questionText;
+    }
+
+    function addQuestionToThree(themeId, questionName, questionId) {
+
+
+      shownQuestion.questionText = document.getElementById("questionText").value;
+      var checkedTheme = document.getElementById(vs("theme_$v", themeId));
+
+      var ul = document.createElement("ul");
+      checkedTheme.appendChild(ul);
+
+      var li = document.createElement("li");
+      li.setAttribute("id", vs("question_$v", questionId));
+      li.innerHTML = questionName;
+
+      li.setAttribute("onclick", vsm("showQuestionChecked($v0, $v1)", [themeId, questionId]));
+      ul.appendChild(li);
+
+      questionViews.push(li);
+    }
+
+    function uploadPicture(idx, callback) {
+
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            alert(reader.result);
+            var request = "/uploadQuestionImage";
+            if (id != null) {
+                request += "/" + id;
+            }
+            requestPost(request, JSON.stringify({result: reader.result}), function (a) {
+                callback(a.result);
+            });
+        };
+        reader.readAsDataURL(document.getElementById("chooser").files[0]);
+
+    }
+    function showImage(image) {
+        var preview = document.getElementById("preview");
+        if (image != null) {
+            loadImage("/getQuestionImage/" + image, function (responce) {
+
+                preview.setAttribute("src", responce);
+            });
+        } else {
+            preview.setAttribute("src", "img/placeholder_image.png");
+        }
+    }
+
+
+</script>
+
+<body>
+<input type="file" id="chooser" style="display: none;" (change)="previewFile($event)">
+
+<label id="courseName">{{course.name}}</label>
+<label>Список вопросов</label>
+<button id="addTheme" (click)="showAddThemePopup()">Добавить тему</button>
+
+<div class="top">
+    <div id="themesAndQuestions" class="themesAndQuestions">
+        <ul id="themes">
+          <li *ngFor="let theme of course.themes">
+            <label
+              [class.checked]="theme.id === checkedThemeId"
+              [class.unchecked]="theme.id != checkedThemeId"
+              (click)="selectTheme(theme)">
+              {{theme.themeName}}
+            </label>
+            <ul *ngFor="let question of theme.questions"
+                [class.checked]="question.id === shownQuestion.id"
+                [class.unchecked]="question.id != shownQuestion.id"
+                (click)="showQuestion(question)"
+            >{{question.questionText}}</ul>
+          </li>
+        </ul>
+    </div>
+
+
+
+
+    <div class="preview">
+        <img id="preview" class="preview" src="{{shownQuestion.imagePreview}}" (click)="showImageChooser()"/>
+    </div>
+</div>
+
+<div id="questions">
+    <div>
+        <textarea id="questionText" placeholder="Вопрос" class="question" cols="40" rows="5">{{shownQuestion.questionText}}</textarea>
+        <div id="answers">
+          <div *ngFor="let answer of shownQuestion.answers; let i = index">
+            <input type="text" class="answers" placeholder="Вариант {{i+1}}" value="{{answer.text}}">
+            <input type="number" class="points" placeholder="Баллы" value="{{answer.points}}">
+            <button (click)="deleteAnswer(i)">Удалить</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+<button id="next" (click)="addEmptyAnswer()">Добавить ответ</button>
+
+<button id="save" (click)="saveQuestion()">Сохранить вопрос в тему</button>
+<br/>
+
+</body>
+</html>

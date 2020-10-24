@@ -1,0 +1,108 @@
+body {
+    background: #c5d8ff;
+
+    width: 100%;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+body {
+    margin: 0;
+}
+
+input[type=text] {
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    margin-bottom: 25px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    color: #4f4f4f;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+
+
+textarea.question {
+    width: 90%;
+    height: 100px;
+    padding: 5px;
+    margin: 5px 10px 25px;
+    border: 1px solid #ccc;
+    color: #4f4f4f;
+    font-size: 16px;
+    border-radius: 5px;
+
+}
+div.baseDiv {
+    margin: 5%;
+    width: 90%;
+}
+
+div.top {
+    flex-direction: row;
+    display: flex
+}
+
+div.themesAndQuestions {
+    overflow-y: auto;
+    height: 200px;
+    width: 400px;
+    background-color: #FFFFFF;
+}
+
+img.preview {
+    height: 200px;
+    width: 200px;
+}
+
+div.preview {
+    margin-left: 30px;
+    align-self: flex-end;
+}
+
+div.questionTop {
+    flex-direction: row;
+    display: flex;
+    width: 100%;
+}
+
+label.questionNumberLabel {
+    margin-left: 30px;
+    align-self: flex-end;
+}
+
+input.questionNumber {
+    width: 40px;
+    align-self: flex-end;
+}
+
+label.checked{
+    font-weight:bold;
+}
+
+label.unchecked{
+    font-weight:normal;
+}
+
+ul.unchecked{
+    font-weight:normal;
+    color: black;
+}
+
+ul.checked{
+    font-weight:bold;
+    color: green;
+}
+input.answers {
+  width: 80%;
+  margin: 5px 10px 10px;
+}
+input.points {
+  margin-right: 10px;
+  width: 50px;
+  height: 15px;
+}
