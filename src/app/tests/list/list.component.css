@@ -1,0 +1,15 @@
+.container {
+    margin: 5vh;
+}
+
+.quizes {
+    padding-top: 20px;
+}
+
+.list-heading {
+    font-size: 25px;
+}
+
+button {
+    margin-left: 5px;
+}

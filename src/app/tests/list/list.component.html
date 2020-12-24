@@ -1,0 +1,25 @@
+<div class="container">
+    <button mat-flat-button color="primary">Создать тест</button>
+
+    
+    
+    <div class="quizes" *ngFor="let qz of quizes">
+        <mat-card>
+            <p class="list-heading">
+                {{ qz.quizname }}
+            <p>
+            <h5>
+                {{ qz.createdBy }}
+            </h5>
+
+            <div class="buttons-row">
+                <button mat-stroked-button>
+                    <mat-icon>edit</mat-icon>
+                    Редактировать тест 
+                </button>
+                <button mat-stroked-button color="warn">Удалить</button>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
