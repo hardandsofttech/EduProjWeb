@@ -14,13 +14,17 @@ import { MatListModule } from '@angular/material/list';
 import { ListComponent } from './tests/list/list.component';
 import { ViewComponent } from './tests/view/view.component';
 import { MatCardModule } from '@angular/material/card';
+import {TestManagementComponent} from './tests_magement/testManagement.component';
+import {HttpClientModule} from '@angular/common/http';
+import 'reflect-metadata';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigateComponent,
     ListComponent,
-    ViewComponent
+    ViewComponent,
+    TestManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatListModule,
     MatCardModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
