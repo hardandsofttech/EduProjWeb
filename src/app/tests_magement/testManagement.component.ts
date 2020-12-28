@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AddThemeBody, Answer, Course, Question, Responce, Theme} from './course.model';
-import {plainToClass} from 'class-transformer';
+import 'reflect-metadata';
+import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'app-test-management',

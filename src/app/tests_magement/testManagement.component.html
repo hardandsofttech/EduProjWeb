@@ -120,56 +120,79 @@
 </script>
 
 <body>
+
+<mat-card class="card">
 <input type="file" id="chooser" style="display: none;" (change)="previewFile($event)">
 
 <label id="courseName">{{course.name}}</label>
-<label>Список вопросов</label>
-<button id="addTheme" (click)="showAddThemePopup()">Добавить тему</button>
+<label>
+    <h3>Список вопросов</h3>
+    <br>
+</label>
+<button mat-flat-button color="primary" id="addTheme" (click)="showAddThemePopup()"> <mat-icon>add</mat-icon> Добавить тему </button>
+<br>
 
-<div class="top">
-    <div id="themesAndQuestions" class="themesAndQuestions">
-        <ul id="themes">
-          <li *ngFor="let theme of course.themes">
-            <label
-              [class.checked]="theme.id === checkedThemeId"
-              [class.unchecked]="theme.id != checkedThemeId"
-              (click)="selectTheme(theme)">
-              {{theme.themeName}}
-            </label>
-            <ul *ngFor="let question of theme.questions"
-                [class.checked]="question.id === shownQuestion.id"
-                [class.unchecked]="question.id != shownQuestion.id"
-                (click)="showQuestion(question)"
-            >{{question.questionText}}</ul>
-          </li>
-        </ul>
+<br><br>
+
+<mat-card>
+    <div class="top">
+        <div id="themesAndQuestions" class="themesAndQuestions">
+            <ul id="themes">
+              <li *ngFor="let theme of course.themes">
+                <label
+                  [class.checked]="theme.id === checkedThemeId"
+                  [class.unchecked]="theme.id != checkedThemeId"
+                  (click)="selectTheme(theme)">
+                  {{theme.themeName}}
+                </label>
+                <ul *ngFor="let question of theme.questions"
+                    [class.checked]="question.id === shownQuestion.id"
+                    [class.unchecked]="question.id != shownQuestion.id"
+                    (click)="showQuestion(question)"
+                >{{question.questionText}}</ul>
+              </li>
+            </ul>
+        </div>
+    
+    
+    
+    
+        <div class="preview">
+            <img id="preview" class="preview" src="{{shownQuestion.imagePreview}}" (click)="showImageChooser()"/>
+        </div>
     </div>
-
-
-
-
-    <div class="preview">
-        <img id="preview" class="preview" src="{{shownQuestion.imagePreview}}" (click)="showImageChooser()"/>
-    </div>
-</div>
+</mat-card>
 
 <div id="questions">
     <div>
-        <textarea id="questionText" placeholder="Вопрос" class="question" cols="40" rows="5">{{shownQuestion.questionText}}</textarea>
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Введите сюда свой вопрос</mat-label>
+            <textarea matInput id="questionText" placeholder="Вопрос" cols="30" rows="5">{{shownQuestion.questionText}}</textarea>
+          </mat-form-field>
+
         <div id="answers">
           <div *ngFor="let answer of shownQuestion.answers; let i = index">
-            <input type="text" class="answers" placeholder="Вариант {{i+1}}" value="{{answer.text}}">
-            <input type="number" class="points" placeholder="Баллы" value="{{answer.points}}">
-            <button (click)="deleteAnswer(i)">Удалить</button>
+            <mat-form-field appearance="outline" style="width: vh;">
+            <input matInput type="text" placeholder="Вариант {{i+1}}" value="{{answer.text}}">
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 10vh;">
+                <input matInput type="number" placeholder="Баллы" value="{{answer.points}}">
+            </mat-form-field>
+
+            <button mat-icon-button color="warn" (click)="deleteAnswer(i)" aria-label="Example icon button with a heart icon">
+                <mat-icon>close</mat-icon>
+              </button>
           </div>
         </div>
     </div>
 </div>
 
-<button id="next" (click)="addEmptyAnswer()">Добавить ответ</button>
 
-<button id="save" (click)="saveQuestion()">Сохранить вопрос в тему</button>
+<button mat-flat-button color="primary" id="next" (click)="addEmptyAnswer()"><mat-icon>add</mat-icon> Добавить ответ</button>
+
+<button mat-flat-button color="" id="save" (click)="saveQuestion()"><mat-icon>push_pin</mat-icon> Сохранить вопрос в тему</button>
 <br/>
+</mat-card>
 
 </body>
 </html>

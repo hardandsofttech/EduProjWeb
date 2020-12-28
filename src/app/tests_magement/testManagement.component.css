@@ -1,5 +1,4 @@
 body {
-    background: #c5d8ff;
 
     width: 100%;
 
@@ -12,31 +11,12 @@ body {
     margin: 0;
 }
 
-input[type=text] {
-    width: 100%;
-    height: 40px;
-    padding: 5px;
-    margin-bottom: 25px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    color: #4f4f4f;
-    font-size: 16px;
-    border-radius: 5px;
-}
 
 
+#answers .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
 
-textarea.question {
-    width: 90%;
-    height: 100px;
-    padding: 5px;
-    margin: 5px 10px 25px;
-    border: 1px solid #ccc;
-    color: #4f4f4f;
-    font-size: 16px;
-    border-radius: 5px;
-
-}
 div.baseDiv {
     margin: 5%;
     width: 90%;
@@ -88,6 +68,8 @@ label.unchecked{
     font-weight:normal;
 }
 
+
+
 ul.unchecked{
     font-weight:normal;
     color: black;
@@ -105,4 +87,9 @@ input.points {
   margin-right: 10px;
   width: 50px;
   height: 15px;
+}
+
+button {
+    margin-left: 5px;
+    margin-right: 5px;
 }
