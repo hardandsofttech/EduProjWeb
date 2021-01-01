@@ -12,7 +12,7 @@ import { plainToClass } from 'class-transformer';
 
 
 export class TestManagementComponent implements OnInit {
-  BASE_URL = 'https://127.0.0.1:8080/';
+  BASE_URL = 'http://127.0.0.1:8080/';
   checkedThemeId = '';
   selectedFile: File;
   shownQuestion = new Question();
